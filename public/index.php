@@ -1,4 +1,7 @@
 <?php
+/* chargement des fichiers necessaires
+ affichage de la vue correspondante
+*/
 
 require "../functions/router.php";
 
