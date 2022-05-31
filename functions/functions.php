@@ -16,7 +16,7 @@ function post($param)
 
 function contact()
 {
-    return  view('contact.view', ['bonjour'=>'bonjour les amis']);
+    return  view('contact.view', ['bonjour'=>'bonjour les amis', 'tache'=>2]);
 }
 
 function error404()

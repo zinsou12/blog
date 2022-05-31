@@ -1,11 +1,28 @@
 <?php
 /* chargement des fichiers necessaires
- affichage de la vue correspondante
+
+scan du 
+
 */
 
-require "../functions/router.php";
+foreach(scandir('../functions') as $fichier)
+{
+    if(preg_match("#.php$#", $fichier))
+    {
+        require __DIR__.'/../functions/'.$fichier;
+    }
+    
+}
 
-require "../functions/view.php";
+
+//var_dump(require_once __DIR__.'/../functions');
+
+
+
+
 
  //var_dump($_GET);die;
+ /*
+ affichage de la vue correspondante
+ */
 echo run($_SERVER['REQUEST_METHOD']);

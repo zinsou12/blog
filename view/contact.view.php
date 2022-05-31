@@ -11,6 +11,8 @@
 ceci est un test
 <?php
 echo $bonjour;
+
+echo $tache;
   ?>  
 </body>
 </html>

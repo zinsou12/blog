@@ -1,5 +1,5 @@
 <?php
-require "functions.php";
+
 
 function run($method)
 {
