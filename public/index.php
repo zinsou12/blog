@@ -7,7 +7,7 @@ scan du
 
 foreach(scandir('../functions') as $fichier)
 {
-    if(preg_match("#.php$#", $fichier))
+    if(preg_match("#/.php$#", $fichier))
     {
         require __DIR__.'/../functions/'.$fichier;
     }
