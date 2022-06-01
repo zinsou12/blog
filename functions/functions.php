@@ -1,8 +1,8 @@
 <?php
-
+require '../functions/view/view.php';
 
 function home()
-{
+{    
   return  view('home.view');
 }
 function posts()
@@ -11,7 +11,7 @@ function posts()
 }
 function post($param)
 {
-    echo "Je suis la page qui affiche le post {$param}";
+    echo "Je suis la page qui affiche le post $param";
 }
 
 function contact()
