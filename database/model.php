@@ -24,7 +24,7 @@ function getOnORAll(string $table,$id=null)
     }
 }
 
-function findAll(string $table, array $tableau)
+function findAlls(string $table, array $tableau)
 {
    $keys = [];
    
