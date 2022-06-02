@@ -20,11 +20,13 @@ function getOnORAll(string $table,$id=null)
 
         $data = $getPost->fetch();
 
-        return $data;
+        return $data = $data===false ? [] : $data;
+
+        
     }
 }
 
-function findAlls(string $table, array $tableau)
+function findAll(string $table, array $tableau)
 {
    $keys = [];
    
