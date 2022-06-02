@@ -46,7 +46,7 @@ function findAll(string $table, array $tableau)
         $keys [$key]= $key.'=:'.$key;
     }
 
-    $keys = implode(', ', $keys);
+    $keys = implode(' and ', $keys);
     
     //return var_dump($keys);
 
