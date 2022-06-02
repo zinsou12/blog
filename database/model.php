@@ -2,23 +2,48 @@
 require "getPdo.php";
 
 //Exemple
-function getId($table=null,$id=null)
+function getOnORAll(string $table,$id=null)
 {
-    $req = getPdo()->prepare("SELECT * FROM $table WHERE id=?");
-    $req->execute([$id]);
-    return $req->fetch();
+    if($id===null)
+    {
+        $getPosts = getPdo()->query("SELECT * FROM $table");
+
+        $data = $getPosts->fetchAll();
+
+        return $data;
+    }
+    else
+    {
+        $getPost = getPdo()->prepare("SELECT * FROM $table WHERE id=:id");
+
+        $getPost->execute(['id'=>$id]);
+
+        $data = $getPost->fetch();
+
+        return $data;
+    }
 }
 
-function getAll()
+function findAll(string $table, array $tableau)
 {
-    
-    
-    
-    $req = getPdo()->query("SELECT * FROM posts");
+   $keys = [];
+   
+   $values = [];
 
-    $data= $req->fetchAll();
+    foreach($tableau as $key=>$value)
+    {
+        $keys [$key]= $key.'=:'.$key;
+    }
 
-    return $data;
+    $keys = implode(', ', $keys);
     
-     
+    //return var_dump($keys);
+
+    $getPost = getPdo()->prepare("SELECT * FROM $table WHERE $keys");
+
+        $getPost->execute($tableau);
+
+        $data = $getPost->fetchAll();
+
+        return $data;
 }
