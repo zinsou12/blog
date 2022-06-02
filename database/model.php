@@ -1,7 +1,13 @@
 <?php
 require "getPdo.php";
 
-//Exemple
+/*
+    fonction permettant d'afficher toutes les informations ou une seule information specifique
+
+    si aucune id n'est fourni nous retournons toutes les informations dans le cas contraire l'information de l'identifiant specifié sera retourné
+    
+    si l'id inséré n'existe pas dans la base de donnée un tableau vide sera renvoyé
+    */
 function getOnORAll(string $table,$id=null)
 {
     if($id===null)
@@ -26,13 +32,16 @@ function getOnORAll(string $table,$id=null)
     }
 }
 
+/*
+
+fonction permettant d'afficher plusieurs informations en fonction des informations passées dans le tableau
+
+*/
 function findAll(string $table, array $tableau)
 {
    $keys = [];
    
-   $values = [];
-
-    foreach($tableau as $key=>$value)
+       foreach($tableau as $key=>$value)
     {
         $keys [$key]= $key.'=:'.$key;
     }
@@ -48,4 +57,44 @@ function findAll(string $table, array $tableau)
         $data = $getPost->fetchAll();
 
         return $data;
+}
+
+/*
+
+fonction permettant l'ajout dans la base de donnée.
+
+reçoit en parametre une table et un tableau.
+
+le tableau permet de spécifier les informations à inserer dans la base de donnée
+
+*/
+
+function create(string $table, array $tableau)
+{
+
+    $keys = [];
+
+    $values = [];
+    
+    foreach($tableau as $key=>$value)
+    {
+        $keys[$key] = $key;
+    
+        $values[$key] = ':'.$key;
+    }
+    
+    $keys = implode(', ', $keys);
+    
+    $values = implode(', ', $values);    
+    
+    $sql = "INSERT INTO $table($keys) VALUES ($values)";
+    
+    $data = getPdo()->prepare($sql);
+    
+    $response = $data->execute($tableau);
+
+    if($response)
+    {
+        return 'ajout effectué avec succès';
+    }
 }
