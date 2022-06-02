@@ -1,6 +1,6 @@
 <?php
 
-function view($view,$data=null)
+function view($view, array $data=[])
 {
     /**
      * cette fonction permet d'appeler une vue.
@@ -8,7 +8,7 @@ function view($view,$data=null)
      *la premiere la vue et la seconde les valeurs à passer.
      */
 
-    if($data !==null)
+    if(!empty($data))
     {
         extract($data);
     }
