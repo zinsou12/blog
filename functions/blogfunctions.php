@@ -6,14 +6,18 @@ function home()
 }
 function posts()
 {
-    $datas = getAll();
-    var_dump($datas); die();
+    $datas = findAll('posts', ['id'=>'2022-06-01 17:08:25']);
+
+    return var_dump($datas);
+
+    //var_dump($datas); die();
+    
     view("posts.view");
 }
 function post($id=null)
 {
     
-    $datas = getId("posts",$id);
+    $datas = getOnORAll("posts",$id);
 
     //var_dump($datas);die();
     //foreach($datas as $data );
