@@ -14,9 +14,14 @@ function getOnORAll(string $table,$id=null)
     {
         $getPosts = getPdo()->query("SELECT * FROM $table");
 
-        $data = $getPosts->fetchAll();
+        
 
-        return $data;
+        while($data=$getPosts->fetch(PDO::FETCH_ASSOC))
+        {
+            $datas[]=$data;
+        }
+
+        return $datas;
     }
     else
     {
@@ -89,7 +94,7 @@ function create(string $table, array $tableau)
     
     $sql = "INSERT INTO $table($keys) VALUES ($values)";
     
-    $data = getPdo()->prepare($sql);
+    $data = getPdo()->prepare($sql, [PDO::ATTR_CURSOR=>PDO::CURSOR_FWDONLY]);
     
     $response = $data->execute($tableau);
 
@@ -97,4 +102,29 @@ function create(string $table, array $tableau)
     {
         return 'ajout effectué avec succès';
     }
+}
+
+function update(string $table, array $tableau, int $id)
+{
+
+    
+
+    foreach($tableau as $key=>$value)
+    {
+        $keys[] = $key.'=:'.$key;
+    }
+
+    $keys = implode(', ', $keys);
+
+    $sql = "UPDATE $table SET $keys WHERE id=:id";
+
+    $req = getPdo()->prepare($sql);
+
+    $tableau['id']=$id;
+    
+    return var_dump($req->execute($tableau));
+
+    
+
+
 }
