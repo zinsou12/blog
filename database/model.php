@@ -118,7 +118,7 @@ function update(string $table, array $tableau, int $id)
 
     $sql = "UPDATE $table SET $keys WHERE id=:id";
 
-    $req = getPdo()->prepare($sql);
+    $req = getPdo()->prepare($sql, [PDO::ATTR_CURSOR=>PDO::CURSOR_FWDONLY]);
 
     $tableau['id']=$id;
     
