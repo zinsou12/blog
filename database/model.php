@@ -8,20 +8,15 @@ require "getPdo.php";
     
     si l'id inséré n'existe pas dans la base de donnée un tableau vide sera renvoyé
     */
-function getOnORAll(string $table,$id=null)
+function getOneOrAll(string $table,$id=null)
 {
     if($id===null)
     {
-        $getPosts = getPdo()->query("SELECT * FROM $table");
+        $getPosts = getPdo()->query("SELECT * FROM $table ORDER BY id DESC ");
 
-        
+        $data = $getPosts->fetchAll();
 
-        while($data=$getPosts->fetch(PDO::FETCH_ASSOC))
-        {
-            $datas[]=$data;
-        }
-
-        return $datas;
+        return $data;
     }
     else
     {
@@ -90,11 +85,11 @@ function create(string $table, array $tableau)
     
     $keys = implode(', ', $keys);
     
-    $values = implode(', ', $values);    
+    $values = implode(', ', $values); 
     
     $sql = "INSERT INTO $table($keys) VALUES ($values)";
     
-    $data = getPdo()->prepare($sql, [PDO::ATTR_CURSOR=>PDO::CURSOR_FWDONLY]);
+    $data = getPdo()->prepare($sql);
     
     $response = $data->execute($tableau);
 
@@ -106,8 +101,6 @@ function create(string $table, array $tableau)
 
 function update(string $table, array $tableau, int $id)
 {
-
-    
 
     foreach($tableau as $key=>$value)
     {
@@ -124,7 +117,15 @@ function update(string $table, array $tableau, int $id)
     
     return var_dump($req->execute($tableau));
 
-    
-
-
 }
+
+//...Example
+function delete($table,$id)
+{
+    $req = getPdo()->prepare("DELETE FROM {$table} WHERE id = ?");
+    $req->execute([$id]);
+    return $req;
+}
+
+
+

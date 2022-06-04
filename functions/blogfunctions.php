@@ -1,27 +1,26 @@
 <?php
-require "../database/model.php";
+require __DIR__."/../functions/view/view.php";
+
+require __DIR__."/../database/model.php";
+
 function home()
 {
   view("home.view");
 }
 function posts()
 {
-    $datas = findAll('posts', ['id'=>'2022-06-01 17:08:25']);
+    $datas['data'] = getOneOrAll("posts");
 
-    return var_dump($datas);
-
-    //var_dump($datas); die();
-    
-    view("posts.view");
+    view("posts.view",$datas);
 }
-function post($id=null)
+function post($id)
 {
-    
-    $datas = getOnORAll("posts",$id);
-
-    //var_dump($datas);die();
-    //foreach($datas as $data );
-    view("post.view",$datas);//petit exemple
+    if($id == null){
+        header("location:../../blogfunction/posts");
+        die;
+    }
+    $datas = getOneOrAll("posts",$id);
+    view("post.view",$datas);
 }
 
 function contact()
